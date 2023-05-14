@@ -1,24 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import GenericLayout from "../layouts/Generic";
 import products from "../data/products.json";
 import ProductList from "../components/ProductList";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCartSize } from "../slices/ShoppingCart";
 
 const Products = () => {
-  const [cart, setCart] = useState<number[]>([]);
   const navigate = useNavigate();
+  const cartSize = useSelector(selectCartSize);
 
   return (
     <GenericLayout title="Products">
-      {cart.length > 0 && (
-        <button onClick={() => navigate("/cart")}>Cart</button>
-      )}
-      <ProductList
-        products={products}
-        onAddToCart={(productID) =>
-          setCart((products) => [...products, productID])
-        }
-      />
+      {cartSize > 0 && <button onClick={() => navigate("/cart")}>Cart</button>}
+      <ProductList products={products} />
     </GenericLayout>
   );
 };
