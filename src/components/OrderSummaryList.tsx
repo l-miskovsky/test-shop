@@ -1,16 +1,17 @@
 import { CartItem } from "../types/CartItem";
+import { OrderItem } from "../types/OrderItem";
 
 interface Props {
-  cartItems: CartItem[];
+  items: OrderItem[];
 }
 
-const OrderSummaryList: React.FC<Props> = ({ cartItems }) => {
+const OrderSummaryList: React.FC<Props> = ({ items }) => {
   return (
     <ul>
-      {cartItems.map(({ product, quantity }) => (
-        <li key={product.id}>
+      {items.map(({ product, quantity }) => (
+        <li key={product}>
           <p>
-            {quantity}x {product.name}
+            {quantity}x {product}
           </p>
         </li>
       ))}
