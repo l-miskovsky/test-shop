@@ -1,4 +1,3 @@
-import { CartItem } from "../types/CartItem";
 import { OrderItem } from "../types/OrderItem";
 
 interface Props {
@@ -7,11 +6,12 @@ interface Props {
 
 const OrderSummaryList: React.FC<Props> = ({ items }) => {
   return (
-    <ul>
+    <ul className="divide-y-2 divide-gray-200">
       {items.map(({ product, quantity }) => (
-        <li key={product}>
+        <li key={product} className="p-4">
           <p>
-            {quantity}x {product}
+            <span>{quantity}x</span>
+            <span className="pl-8">{product}</span>
           </p>
         </li>
       ))}

@@ -12,7 +12,7 @@ const Router: React.FC = () => {
       <Routes>
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
-        <Route path="/" element={<Products />} />
+        <Route path="/products" element={<Products />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>

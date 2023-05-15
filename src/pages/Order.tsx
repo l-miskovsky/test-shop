@@ -6,6 +6,7 @@ import { deleteAll } from "../slices/ShoppingCart";
 import OrderSummaryList from "../components/OrderSummaryList";
 import Price from "../components/Price";
 import { selectOrderSummary, selectOrderTotal } from "../slices/Order";
+import Button from "../components/Button";
 
 const Order = () => {
   const navigate = useNavigate();
@@ -15,16 +16,16 @@ const Order = () => {
 
   const handleContinueShopping = () => {
     dispatch(deleteAll());
-    navigate("/");
+    navigate("/products");
   };
   return (
     <GenericLayout title="Thank you for your order">
       <OrderSummaryList items={orderSummary} />
-      <p>
-        Please send us the payment of <Price value={orderTotal} bold /> to our
-        bitcoin address
+      <p className="py-16">
+        Please send us the payment of <Price value={orderTotal} bold large /> to
+        our bitcoin address.
       </p>
-      <button onClick={handleContinueShopping}>Continue shopping</button>
+      <Button onClick={handleContinueShopping}>Continue shopping</Button>
     </GenericLayout>
   );
 };
