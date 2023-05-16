@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
@@ -13,6 +13,8 @@ const Router: React.FC = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
         <Route path="/products" element={<Products />} />
+        {/* Since we don't really have a home page, products used instead */}
+        <Route path="/" element={<Navigate to="/products" replace />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
