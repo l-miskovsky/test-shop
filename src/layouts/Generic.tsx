@@ -5,6 +5,10 @@ interface GenericLayoutProps {
   title: string;
   children: React.ReactNode;
 }
+/**
+ * NOTE: paddings, font-weight, font-size, icons etc. may not be a proper match, just approximation. Design would supply correct values.
+ * Also media queries are not implemented nor anything else not visible (and not needed for the functionality) on provided images (eg. hover visuals).
+ */
 export const GenericLayout: React.FC<GenericLayoutProps> = ({
   title,
   children,

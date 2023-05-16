@@ -4,7 +4,7 @@
 module.exports = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
-    // //TODO: custom color palette
+    // NOTE: custom color palette would most likely be needed
     // colors: {
     //   transparent: "transparent",
     //   current: "currentColor",

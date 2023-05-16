@@ -13,7 +13,6 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
 
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product));
-    console.log(`ADD ${product.id} to cart.`);
   };
 
   const randomizedWidth = 420 + Math.round(Math.random() * 10);

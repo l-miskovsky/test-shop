@@ -11,6 +11,7 @@ import {
 import { setOrder } from "../slices/Order";
 import Button from "../components/Button";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
+
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,11 +19,13 @@ const Cart = () => {
   const cartSize = useSelector(selectCartSize);
 
   const handleFinishOrder = () => {
+    console.log("Cart contents:");
     console.log({ cartItems });
     dispatch(setOrder(cartItems));
     dispatch(deleteAll());
     navigate("/order");
   };
+
   return (
     <GenericLayout title="Cart">
       <CartItemTable cartItems={cartItems} />

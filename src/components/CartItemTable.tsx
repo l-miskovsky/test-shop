@@ -5,6 +5,7 @@ import { CartItem } from "../types/CartItem";
 import Price from "./Price";
 import { useMemo } from "react";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+
 interface Props {
   cartItems: CartItem[];
 }
@@ -35,7 +36,7 @@ const CartItemTable: React.FC<Props> = ({ cartItems }) => {
       0
     );
     return {
-      vatGroups: Object.values(vatGroupTotals),
+      vatGroups: Object.values(vatGroupTotals).filter(({ total }) => total > 0),
       total: cartTotal,
       vatTotal,
     };
@@ -64,80 +65,73 @@ const CartItemTable: React.FC<Props> = ({ cartItems }) => {
   }
 
   return (
-    <>
-      <table className="w-full">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="rounded-l-md py-3 pl-4 text-left">Item</th>
-            <th className="py-3 text-left">Quantity</th>
-            <th className="py-3 text-right">Unit Price incl. VAT</th>
-            <th className="py-3 text-right">VAT</th>
-            <th className="py-3 pr-4 text-right">Total</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y-2 divide-gray-200 border-b-2 border-gray-200">
-          {cartItems.map(({ product, quantity }) => (
-            <tr key={product.id}>
-              <td className="py-3 pl-4">{product.name}</td>
-              <td className="flex items-center gap-2 py-3">
-                <input
-                  className="h-12 w-12 rounded border border-gray-400 text-center"
-                  type="number"
-                  value={quantity}
-                  onChange={(event) =>
-                    handleQuantityChange(
-                      product.id,
-                      parseInt(event.target.value)
-                    )
-                  }
-                />
-                <button onClick={() => handleDeleteFromCart(product.id)}>
-                  <DeleteOutlinedIcon />
-                </button>
-              </td>
-              <td className="py-3 text-right">
-                <Price value={product.unit_price_incl_vat} />
-              </td>
-              <td className="py-3 text-right">{product.vat_category}%</td>
-              <td className="py-3 pr-4 text-right text-lg">
-                <Price value={product.unit_price_incl_vat * quantity} />
-              </td>
-            </tr>
-          ))}
-          <tr>
-            <td />
-            <td />
-            <td />
-            <td className="py-3 text-right">Total excl. VAT</td>
+    <table className="w-full">
+      <thead>
+        <tr className="bg-gray-100">
+          <th className="rounded-l-md py-3 pl-4 text-left">Item</th>
+          <th className="py-3 text-left">Quantity</th>
+          <th className="py-3 text-right">Unit Price incl. VAT</th>
+          <th className="py-3 text-right">VAT</th>
+          <th className="py-3 pr-4 text-right">Total</th>
+        </tr>
+      </thead>
+      <tbody className="divide-y-2 divide-gray-200 border-b-2 border-gray-200">
+        {cartItems.map(({ product, quantity }) => (
+          <tr key={product.id}>
+            <td className="py-3 pl-4">{product.name}</td>
+            <td className="flex items-center gap-2 py-3">
+              <input
+                className="h-12 w-12 rounded border border-gray-400 text-center"
+                type="number"
+                value={quantity}
+                onChange={(event) =>
+                  handleQuantityChange(product.id, parseInt(event.target.value))
+                }
+              />
+              <button onClick={() => handleDeleteFromCart(product.id)}>
+                <DeleteOutlinedIcon />
+              </button>
+            </td>
+            <td className="py-3 text-right">
+              <Price value={product.unit_price_incl_vat} />
+            </td>
+            <td className="py-3 text-right">{product.vat_category}%</td>
             <td className="py-3 pr-4 text-right text-lg">
-              <Price value={vatSummary.total - vatSummary.vatTotal} />
+              <Price value={product.unit_price_incl_vat * quantity} />
             </td>
           </tr>
-          {vatSummary.vatGroups
-            .filter(({ total }) => total > 0)
-            .map(({ rate, total }) => (
-              <tr key={rate}>
-                <td />
-                <td />
-                <td />
-                <td className="py-3 text-right">VAT {rate}%</td>
-                <td className="py-3 pr-4 text-right text-lg">
-                  <Price value={total} />
-                </td>
-              </tr>
-            ))}
-          <tr>
+        ))}
+        <tr>
+          <td />
+          <td />
+          <td />
+          <td className="py-3 text-right">Total excl. VAT</td>
+          <td className="py-3 pr-4 text-right text-lg">
+            <Price value={vatSummary.total - vatSummary.vatTotal} />
+          </td>
+        </tr>
+        {vatSummary.vatGroups.map(({ rate, total }) => (
+          <tr key={rate}>
             <td />
             <td />
             <td />
-            <td className="py-3 text-right">Total</td>
+            <td className="py-3 text-right">VAT {rate}%</td>
             <td className="py-3 pr-4 text-right text-lg">
-              <Price value={vatSummary.total} bold />
+              <Price value={total} />
             </td>
           </tr>
-        </tbody>
-      </table>
-    </>
+        ))}
+        <tr>
+          <td />
+          <td />
+          <td />
+          <td className="py-3 text-right">Total</td>
+          <td className="py-3 pr-4 text-right text-lg">
+            <Price value={vatSummary.total} bold />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 

@@ -3,6 +3,7 @@ import Button from "./Button";
 import { selectCartSize } from "../slices/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+
 const CartBadge = () => {
   const cartSize = useSelector(selectCartSize);
   const navigate = useNavigate();
